@@ -1,0 +1,42 @@
+{
+    "manifest_version": 3,
+    "name": "BetBlock",
+    "version": "1.0",
+    "description": "BetBlock is a simple extension that limits access to gambling websites.",
+    "permissions": [
+        "tabs",
+        "storage"
+    ],
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "icon.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://stake.com/*",
+                "https://www.paddypower.com/*",
+                "https://www.bet365.com/*",
+                "https://www.betfair.com/*",
+                "https://www.betfred.com/*",
+                "https://www.betvictor.com/*",
+                "https://www.boylesports.com/*",
+                "https://www.888casino.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
