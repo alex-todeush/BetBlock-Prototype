@@ -5,24 +5,32 @@ const visitLimit = 3;
 const today = new Date().toISOString().split("T")[0];
 
 chrome.storage.local.get([currentUrl], function (result) {
-    let visitCount = result[currentUrl] ? result[currentUrl] : 0;
-    const lastVisitDate = result.lastVisitDate;
+    console.log("Storage result:", result);
 
-    if (lastVisitDate !== today) {
+    let visitData = result[currentUrl] || { visitCount: 0, lastVisitDate: null };
+    let visitCount = visitData.visitCount;
+    const lastVisitDate = visitData.lastVisitDate;
+
+    console.log("Last visit date:", lastVisitDate);
+    console.log("Today's date:", today);
+
+    if (!lastVisitDate || lastVisitDate !== today) {
         visitCount = 0;
     }
 
     visitCount++;
 
-    chrome.storage.local.set({ [currentUrl]: visitCount, lastVisitDate: today }, function () {
-        console.log(`Visit count for ${currentUrl}: ${visitCount}`);
+    chrome.storage.local.set(
+        { [currentUrl]: { visitCount: visitCount, lastVisitDate: today } },
+        function () {
+            console.log(`Visit count for ${currentUrl}: ${visitCount}`);
 
-        showPopup(visitCount);
+            showPopup(visitCount);
 
-        if (visitCount > visitLimit) {
-            blockPage();
-        }
-    });
+            if (visitCount > visitLimit) {
+                blockPage();
+            }
+        });
 });
 
 function showPopup(visitCount) {
