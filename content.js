@@ -93,7 +93,7 @@ function blockPage() {
     Object.assign(icon.style, iconStyles);
 
     const message = document.createElement("div");
-    message.innerText = `This page has been blocked by BetBlock as you have exceeded your daily limit of ${visitLimit} visits.`;
+    message.innerText = `You've reached your daily limit of ${visitLimit} visits to this site. BetBlock is here to help you stay on track with your goals.`;
 
     container.appendChild(icon);
     container.appendChild(message);
