@@ -34,10 +34,11 @@ chrome.storage.local.get([currentUrl], function (result) {
 });
 
 function showPopup(visitCount) {
-    const popup = document.createElement("div");
-    popup.innerHTML = `You have visited this site <strong>${visitCount}</strong> time${visitCount === 1 ? "" : "s"} today.\n
+    // Visit Count Popup
+    const visitPopup = document.createElement("div");
+    visitPopup.innerHTML = `You have visited this site <strong>${visitCount}</strong> time${visitCount === 1 ? "" : "s"} today.\n
     <br> You have <strong>${visitLimit - visitCount}</strong> visit${visitLimit - visitCount === 1 ? "" : "s"} remaining.`;
-    const popupStyles = {
+    const visitPopupStyles = {
         position: "fixed",
         top: "10px",
         right: "10px",
@@ -50,11 +51,34 @@ function showPopup(visitCount) {
         boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)"
     };
 
-    Object.assign(popup.style, popupStyles);
+    Object.assign(visitPopup.style, visitPopupStyles);
+    document.body.appendChild(visitPopup);
 
-    document.body.appendChild(popup);
+    // Support Popup
+    const supportPopup = document.createElement("div");
+    supportPopup.innerHTML = `Need help staying on track? Check out these resources:\n
+    <br><a href="https://example.com/help" target="_blank" style="color: lightblue;">Your Personal Journal</a>\n
+    <br><a href="https://example.com/tips" target="_blank" style="color: lightblue;">Community Support</a>`;
+    const supportPopupStyles = {
+        position: "fixed",
+        top: "80px",
+        right: "10px",
+        background: "rgba(0, 0, 0, 0.8)",
+        color: "white",
+        padding: "15px",
+        borderRadius: "8px",
+        fontSize: "16px",
+        zIndex: "9999",
+        boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)"
+    };
 
-    setTimeout(() => popup.remove(), 3000);
+    Object.assign(supportPopup.style, supportPopupStyles);
+    document.body.appendChild(supportPopup);
+
+    setTimeout(() => {
+        visitPopup.remove();
+        supportPopup.remove();
+    }, 5000);
 }
 
 function blockPage() {
